@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Hba1c by pikesley</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Hba1c</h1>
+        <h2>Because everybody&#39;s pancreas wants a RESTful API</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/pikesley/HbA1c/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/pikesley/HbA1c/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/pikesley/HbA1c" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="hba1c" class="anchor" href="#hba1c"><span class="octicon octicon-link"></span></a>HbA1c</h1>
+
+<h2>
+<a name="just-because-my-pancreas-is-broken-doesnt-mean-it-cant-have-a-restful-api" class="anchor" href="#just-because-my-pancreas-is-broken-doesnt-mean-it-cant-have-a-restful-api"><span class="octicon octicon-link"></span></a>Just because my pancreas is broken, doesn't mean it can't have a RESTful API</h2>
+
+<p>I collect blood-glucose and medication data with <a href="http://www.medivo.com/ontrack/">this</a>. It can export XML and push it straight into Dropbox. Let's make an API! Let's make a dashboard!</p>
+
+<p>Right now it's just a (shittily-named, now I think about it) Rake task:</p>
+
+<pre><code>rake export:jsonify
+</code></pre>
+
+<p>which grabs the newest file from a Dropbox folder called <em>ontrack/</em> (configurable in <em>config/dropbox.yaml</em>), and parses it into some nice JSON, which I'm intending to poke into <a href="http://www.mongodb.org/">MongoDB</a>.</p>
+
+<h2>
+<a name="setting-it-up" class="anchor" href="#setting-it-up"><span class="octicon octicon-link"></span></a>Setting it up</h2>
+
+<pre><code>git clone https://github.com/pikesley/HbA1c
+cd HbA1c
+bundle
+</code></pre>
+
+<p>(expects Ruby 2.1.0)</p>
+
+<p>You need a Dropbox API key and secret from <a href="https://www.dropbox.com/developers/apps">here</a>, then the <a href="https://github.com/futuresimple/dropbox-api">dropbox-api</a> gem comes with a splendid Rake task</p>
+
+<pre><code>rake dropbox:authorize
+</code></pre>
+
+<p>to do the Oauth manoeuvres and get the token and secret for you. Put these in <em>.env</em> (see <em>.env.example</em>) and you should be good to go.</p>
+
+<h2>
+<a name="next-steps" class="anchor" href="#next-steps"><span class="octicon octicon-link"></span></a>Next steps</h2>
+
+<p>How hard can it be to wrap a RESTful API around MongoDB using <a href="http://www.sinatrarb.com/">Sinatra</a>? It's already JSON, right?</p>
+
+<p>And from there, it's a short hop to a beautiful <a href="http://shopify.github.io/dashing/">Dashing</a> dashboard, I expect.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
