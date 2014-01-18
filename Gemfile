@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-#ruby=ruby-1.9.3
-ruby '1.9.3'
-#ruby-gemset=metrics-api
+ruby '2.1.0'
+#ruby-gemset=metrics-api-my-fork
 
 gem 'sinatra'
 gem 'dotenv'
