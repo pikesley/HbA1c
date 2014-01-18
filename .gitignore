@@ -1,4 +1,5 @@
 .idea
 .chef
 .vagrant
-/.env
+.env
+.bundle
