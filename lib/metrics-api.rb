@@ -12,7 +12,7 @@ Dotenv.load unless ENV['RACK_ENV'] == 'test'
 Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
 class MetricsApi < Sinatra::Base
-  
+
   helpers do
     def protected!
       return if authorized?
@@ -21,7 +21,7 @@ class MetricsApi < Sinatra::Base
     end
 
     def authorized?
-      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ENV['METRICS_API_USERNAME'], ENV['METRICS_API_PASSWORD']]
     end
   end
@@ -42,44 +42,50 @@ class MetricsApi < Sinatra::Base
     respond_to do |wants|
       wants.html {
         haml :index, :locals => {
-            :title           => 'Metrics API',
-            :text            => 'Metrics API',
-    #        :bootstrap_theme => '../lavish-bootstrap.css'
+            :title => 'Metrics API',
+            :text  => 'Metrics API',
+            #        :bootstrap_theme => '../lavish-bootstrap.css'
         }
       }
       wants.other { error_406 }
     end
   end
-  
+
   get '/metrics' do
-    data =     {
-      "metrics" => Metric.all.distinct(:name).sort.map do |name|
-        {
-          name: name,
-          url: "https://#{request.host}/metrics/#{name}.json"
-        }
-      end
+    data = {
+        "metrics" => Metric.all.distinct(:name).sort.map do |name|
+          {
+              name: name,
+              url:  "https://#{request.host}/metrics/#{name}.json"
+          }
+        end
     }
     respond_to do |wants|
       wants.json { data.to_json }
       wants.other { error_406 }
     end
   end
-  
+
   post '/metrics/:metric' do
     protected!
 
-    j = JSON.parse request.body.read
+    j        = JSON.parse request.body.read
     j[:name] = params[:metric]
 
-    Metric.where(:datetime => DateTime.parse(j["datetime"])).first.try(:delete)
-
-    @metric = Metric.new j
-  
-    if @metric.save
-      return 201
+    if Metric.where(:datetime => DateTime.parse(j["datetime"])).first
+      if Metric.where(:datetime => DateTime.parse(j["datetime"])).update(value: j["value"])
+        return 201
+      else
+        return 500
+      end
     else
-      return 500
+      @metric = Metric.new j
+
+      if @metric.save
+        return 201
+      else
+        return 500
+      end
     end
   end
 
@@ -90,7 +96,7 @@ class MetricsApi < Sinatra::Base
       wants.other { error_406 }
     end
   end
-  
+
   get '/metrics/:metric/:datetime' do
     time = DateTime.parse(params[:datetime]) rescue error_400("'#{params[:datetime]}' is not a valid ISO8601 date/time.")
     @metric = Metric.where(name: params[:metric], :datetime.lte => time).order_by(:datetime.asc).last
@@ -103,45 +109,45 @@ class MetricsApi < Sinatra::Base
   get '/metrics/:metric/:from/:to' do
     start_date = DateTime.parse(params[:from]) rescue nil
     end_date = DateTime.parse(params[:to]) rescue nil
-    
+
     if params[:from] =~ /^P/
       start_date = end_date - ISO8601::Duration.new(params[:from]).to_seconds.seconds rescue error_400("'#{params[:from]}' is not a valid ISO8601 duration.")
     end
-    
+
     if params[:to] =~ /^P/
       end_date = start_date + ISO8601::Duration.new(params[:to]).to_seconds.seconds rescue error_400("'#{params[:to]}' is not a valid ISO8601 duration.")
     end
-    
+
     invalid = []
-        
+
     invalid << "'#{params[:from]}' is not a valid ISO8601 date/time." if start_date.nil? && params[:from] != "*"
     invalid << "'#{params[:to]}' is not a valid ISO8601 date/time." if end_date.nil? && params[:to] != "*"
-    
+
     error_400(invalid.join(" ")) unless invalid.blank?
-    
+
     if start_date != nil && end_date != nil
       error_400("'from' date must be before 'to' date.") if start_date > end_date
     end
-    
+
     metrics = Metric.where(:name => params[:metric])
     metrics = metrics.where(:datetime.gte => start_date) if start_date
     metrics = metrics.where(:datetime.lte => end_date) if end_date
-        
+
     metrics = metrics.order_by(:datetime.asc)
 
     data = {
-      :count => metrics.count,
-      :values => []
+        :count  => metrics.count,
+        :values => []
     }
-    
+
     metrics.each do |metric|
       data[:values] << {
-        :datetime => metric.datetime,
-        :value => metric.value,
-        :category => metric.category
+          :datetime => metric.datetime,
+          :value    => metric.value,
+          :category => metric.category
       }
     end
-    
+
     respond_to do |wants|
       wants.json { data.to_json }
       wants.other { error_406 }
@@ -150,12 +156,12 @@ class MetricsApi < Sinatra::Base
 
   def error_406
     content_type 'text/plain'
-    error 406, "Not Acceptable" 
+    error 406, "Not Acceptable"
   end
-  
+
   def error_400(error)
     content_type 'text/plain'
-    error 400, {:status => error}.to_json 
+    error 400, { :status => error }.to_json
   end
 
   # start the server if ruby file executed directly

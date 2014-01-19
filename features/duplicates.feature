@@ -34,3 +34,4 @@ Feature: Handle duplicate entries with Last-Write-Wins
     When I send a GET request to "metrics/lantus/2014-01-16T23:49:23+00:00/2014-01-16T23:49:25+00:00"
     Then the response status should be "200"
     And the JSON response should have "$.count" with the text "1"
+    And the JSON response should have "$.values[0].value" with the text "11.0"
