@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.1.0'
-#ruby-gemset=metrics-api-my-fork
+#ruby-gemset=hba1c
 
 gem 'dropbox-api'
 gem 'sinatra'
