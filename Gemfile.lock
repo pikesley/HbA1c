@@ -49,6 +49,10 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.1)
     dotenv (0.9.0)
+    dropbox-api (0.4.1)
+      hashie
+      multi_json
+      oauth
     eventmachine (1.0.3)
     extlib (0.9.16)
     ffi (1.9.3)
@@ -72,6 +76,7 @@ GEM
       rspec (>= 2.14, < 4.0)
     haml (4.0.4)
       tilt
+    hashie (2.0.5)
     highline (1.6.20)
     i18n (0.6.9)
     iso8601 (0.4.1)
@@ -97,6 +102,7 @@ GEM
     multi_test (0.0.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    oauth (0.4.7)
     origin (1.1.0)
     pry (0.9.12.4)
       coderay (~> 1.0)
@@ -148,6 +154,7 @@ GEM
     timers (1.1.0)
     tins (0.13.1)
     tzinfo (0.3.38)
+    xml-simple (1.1.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -162,6 +169,7 @@ DEPENDENCIES
   cucumber-sinatra
   database_cleaner
   dotenv
+  dropbox-api
   foreman
   guard
   guard-cucumber
@@ -176,3 +184,4 @@ DEPENDENCIES
   sinatra
   terminal-notifier-guard
   thin
+  xml-simple
