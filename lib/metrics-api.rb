@@ -68,7 +68,11 @@ class MetricsApi < Sinatra::Base
   
   post '/metrics/:metric' do
     protected!
-    @metric = Metric.new(JSON.parse request.body.read)
+
+    j = JSON.parse request.body.read
+    j[:name] = params[:metric]
+
+    @metric = Metric.new j
   
     if @metric.save
       return 201
@@ -94,7 +98,9 @@ class MetricsApi < Sinatra::Base
     end
   end
 
-  get '/metrics/:metric/:from/:to' do      
+  get '/metrics/:metric/:from/:to' do
+    require 'pry'
+    binding.pry
     start_date = DateTime.parse(params[:from]) rescue nil
     end_date = DateTime.parse(params[:to]) rescue nil
     
@@ -118,10 +124,10 @@ class MetricsApi < Sinatra::Base
     end
     
     metrics = Metric.where(:name => params[:metric])
-    metrics = metrics.where(:time.gte => start_date) if start_date
-    metrics = metrics.where(:time.lte => end_date) if end_date
+    metrics = metrics.where(:datetime.gte => start_date) if start_date
+    metrics = metrics.where(:datetime.lte => end_date) if end_date
         
-    metrics = metrics.order_by(:time.asc)
+    metrics = metrics.order_by(:datetime.asc)
 
     data = {
       :count => metrics.count,
@@ -130,7 +136,7 @@ class MetricsApi < Sinatra::Base
     
     metrics.each do |metric|
       data[:values] << {
-        :time => metric.time,
+        :datetime => metric.datetime,
         :value => metric.value
       }
     end

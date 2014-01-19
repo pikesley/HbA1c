@@ -1,6 +1,6 @@
 Then(/^the data should be stored in the "(.*?)" metric$/) do |metric_name|
-  @metric = Metric.where(type: metric_name).last
-  @metric.type.should == metric_name
+  @metric = Metric.where(name: metric_name).last
+  @metric.name.should == metric_name
 end
 
 Then(/^the time of the stored metric should be "(.*?)"$/) do |time|
