@@ -85,9 +85,9 @@ class MetricsApi < Sinatra::Base
     end
   end
   
-  get '/metrics/:metric/:time' do
-    time = DateTime.parse(params[:time]) rescue error_400("'#{params[:time]}' is not a valid ISO8601 date/time.")
-    @metric = Metric.where(name: params[:metric], :time.lte => time).order_by(:time.asc).last
+  get '/metrics/:metric/:datetime' do
+    time = DateTime.parse(params[:datetime]) rescue error_400("'#{params[:datetime]}' is not a valid ISO8601 date/time.")
+    @metric = Metric.where(name: params[:metric], :datetime.lte => time).order_by(:datetime.asc).last
     respond_to do |wants|
       wants.json { @metric.to_json }
       wants.other { error_406 }
