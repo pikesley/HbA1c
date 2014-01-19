@@ -6,5 +6,5 @@ class Metric
   field :name, type: String
   field :datetime, type: DateTime
   field :category, type: String
-  field :value
+  field :value, type: Float
 end

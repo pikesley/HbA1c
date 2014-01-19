@@ -99,8 +99,6 @@ class MetricsApi < Sinatra::Base
   end
 
   get '/metrics/:metric/:from/:to' do
-    require 'pry'
-    binding.pry
     start_date = DateTime.parse(params[:from]) rescue nil
     end_date = DateTime.parse(params[:to]) rescue nil
     
@@ -137,7 +135,8 @@ class MetricsApi < Sinatra::Base
     metrics.each do |metric|
       data[:values] << {
         :datetime => metric.datetime,
-        :value => metric.value
+        :value => metric.value,
+        :category => metric.category
       }
     end
     

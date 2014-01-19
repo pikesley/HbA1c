@@ -24,7 +24,7 @@ Then(/^the category of the metric should be "(.*?)"$/) do |category|
 end
 
 Then(/^the value of the metric should be "(.*?)"$/) do |value|
-  @metric.value.should == value
+  @metric.value.to_s.should == value
 end
 
 Then(/^the subtype of the metric should be "(.*?)"$/) do |subtype|
