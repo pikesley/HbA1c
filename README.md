@@ -1,3 +1,5 @@
+[![Build Status](http://b.adge.me/travis/pikesley/HbA1c.svg)](https://travis-ci.org/pikesley/HbA1c)
+
 # HbA1c
 
 ## Just because my pancreas is broken, doesn't mean it can't have a RESTful API
