@@ -72,6 +72,8 @@ class MetricsApi < Sinatra::Base
     j = JSON.parse request.body.read
     j[:name] = params[:metric]
 
+    Metric.where(:datetime => DateTime.parse(j["datetime"])).first.try(:delete)
+
     @metric = Metric.new j
   
     if @metric.save
