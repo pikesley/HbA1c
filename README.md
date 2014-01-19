@@ -1,4 +1,8 @@
 [![Build Status](http://b.adge.me/travis/pikesley/HbA1c.svg)](https://travis-ci.org/pikesley/HbA1c)
+[![Coverage Status](http://b.adge.me/coveralls/pikesley/HbA1c.svg)](https://coveralls.io/r/pikesley/HbA1c)
+[![Dependency Status](https://gemnasium.com/pikesley/HbA1c.png)](https://gemnasium.com/pikesley/HbA1c)
+[![Code Climate](https://codeclimate.com/github/pikesley/HbA1c.png)](https://codeclimate.com/github/pikesley/HbA1c)
+[![License](http://b.adge.me/:license-mit-green.svg)](http://pikesley.mit-license.org/)
 
 # HbA1c
 
