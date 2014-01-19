@@ -38,7 +38,7 @@ namespace :export do
     r.sort! { |x, y| x['datetime'] <=> y['datetime'] }
     r.each do |entry|
       metric = entry['type'].downcase
-      if metric == 'Medication'
+      if metric == 'medication'
         metric = entry['subtype'].downcase
       end
 
