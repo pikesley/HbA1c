@@ -1,58 +1,31 @@
-# ODI Metrics API
+# HbA1c
 
-[![Build Status](http://jenkins.theodi.org/buildStatus/icon?job=metrics-api-master)](http://jenkins.theodi.org/job/metrics-api-master/)
-[![Dependency Status](https://gemnasium.com/theodi/metrics-api.png)](https://gemnasium.com/theodi/metrics-api)
-[![Code Climate](https://codeclimate.com/github/theodi/metrics-api.png)](https://codeclimate.com/github/theodi/metrics-api)
+## Just because my pancreas is broken, doesn't mean it can't have a RESTful API
 
-A simple wrapper around MongoDB to allow storage of time series metrics.
+I collect blood-glucose and medication data with [this](http://www.medivo.com/ontrack/). It can export XML and push it straight into Dropbox. Let's make an API! Let's make a dashboard! _Let's have badges!_
 
-# Fetching data
+Right now it's just a (shittily-named, now I think about it) Rake task:
 
-All requests should include `Content-type: application/json`.
+    rake export:jsonify
+    
+which grabs the newest file from a Dropbox folder called _ontrack/_ (configurable in _config/dropbox.yaml_), and parses it into some nice JSON, which I'm intending to poke into [MongoDB](http://www.mongodb.org/).
 
-```
-GET https://metrics.theodi.org/metrics[.json]
-```
+## Setting it up
 
-Fetches list of available metrics
+    git clone https://github.com/pikesley/HbA1c
+    cd HbA1c
+    bundle
+   
+(expects Ruby 2.1.0)
 
-```
-GET https://metrics.theodi.org/metrics/{metric_name}[.json]
-```
+You need a Dropbox API key and secret from [here](https://www.dropbox.com/developers/apps), then the [dropbox-api](https://github.com/futuresimple/dropbox-api) gem comes with a splendid Rake task
 
-Fetches latest value for specified metric
+    rake dropbox:authorize
 
-```
-GET https://metrics.theodi.org/metrics/{metric_name}/{time}
-```
+to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ (see _.env.example_) and you should be good to go.
 
-Fetch the most recent value of the metric at the specified time. `time` is an ISO8601 date/time.
+## Next steps
 
-```
-GET https://metrics.theodi.org/metrics/{metric_name}/{from}/{to}
-```
+How hard can it be to wrap a RESTful API around MongoDB using [Sinatra](http://www.sinatrarb.com/)? It's already JSON, right?
 
-Fetch all values of the metric between the specified times. `from` and `to` can be either:
-
- * An ISO8601 date/time
- * An ISO8601 duration
- * `*`, meaning unspecified
-
-# Adding data
-
-```
-POST https://metrics.theodi.org/metrics/{metric-name}
-```
-
-using a JSON content type, and with the following JSON in the body:
-
-```
-{
-  "name": "{metric-name}",
-  "time": "{iso8601-date-time}",
-  "value": ...
-}
-```
-
-`value` is any valid JSON structure or number.
-}
+And from there, it's a short hop to a beautiful [Dashing](http://shopify.github.io/dashing/) dashboard, I expect.
