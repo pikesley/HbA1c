@@ -37,10 +37,28 @@ namespace :export do
     r = data['record']
     r.sort! { |x, y| x['datetime'] <=> y['datetime'] }
     r.each do |entry|
-#      puts JSON.pretty_generate entry
-      puts entry
-#      puts '---'
+      metric = entry['type'].downcase
+      if metric == 'Medication'
+        metric = entry['subtype'].downcase
+      end
+
+      h = {}
+      ['datetime', 'category', 'value'].each do |key|
+        h[key] = entry[key.to_s]
+      end
+      j = h.to_json
+
+      command = "curl --silent -X POST -H 'Content-Type: application/json' --basic -u %s:%s -d '%s' %s/metrics/%s" % [
+          ENV['METRICS_API_USERNAME'],
+          ENV['METRICS_API_PASSWORD'],
+          j,
+          'http://localhost:4567',
+          metric
+      ]
+
+      `#{command}`
     end
   end
 end
 
+#curl -X POST -H "Content-Type: application/json" --basic -u sam:insulin -d '{"datetime":"2014-01-18T07:17:57+00:00","category":"Breakfast","value":"4.5"}' http://localhost:4567/metrics/humalog
