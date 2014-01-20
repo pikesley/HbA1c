@@ -17,7 +17,7 @@ gem 'iso8601'
 gem 'xml-simple'
 
 group :development, :test do
-  gem 'travis' #, '~> 1.6'
+  gem 'travis', '~> 1.6'
   gem 'capybara-webkit'
   gem 'cucumber'
   gem 'cucumber-sinatra'

@@ -2,4 +2,8 @@ language: ruby
 rvm:
 - 2.1.0
 services: mongodb
-
+deploy:
+  provider: heroku
+  app: pancreas-api
+  api_key:
+    secure: JWXAe20LVlXdWq2jqE8QKgXKy9utsh+AFS3QNMSFO17MCH5QPhaeLvTgL5+r2zxWTdV5+SuIkliadyAfn3fEZSO0EbDw6jP65A2SAxmtuSjK4aPoLHXG79/lzyVkry9LBbVDE0C0xP04Kph2wcQEgUbGsrOzkmI+mrFY1PK1+rw=

@@ -55,6 +55,9 @@ GEM
       hashie
       multi_json
       oauth
+    ethon (0.6.2)
+      ffi (>= 1.3.0)
+      mime-types (~> 1.18)
     eventmachine (1.0.3)
     extlib (0.9.16)
     faraday (0.8.9)
@@ -105,7 +108,7 @@ GEM
       rb-inotify (>= 0.9)
     lumberjack (1.0.4)
     method_source (0.8.2)
-    mime-types (2.0)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     mongoid (3.0.23)
       activemodel (~> 3.1)
@@ -118,7 +121,6 @@ GEM
     multipart-post (1.2.0)
     net-http-persistent (2.9)
     net-http-pipeline (1.0.1)
-    netrc (0.7.7)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     oauth (0.4.7)
@@ -127,6 +129,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pusher-client (0.4.0)
+      websocket (~> 1.0.0)
     rack (1.5.2)
     rack-conneg (0.1.5)
       rack (>= 1.0)
@@ -173,19 +177,21 @@ GEM
     tilt (1.4.1)
     timers (1.1.0)
     tins (0.13.1)
-    travis (1.4.0)
+    travis (1.6.6)
+      addressable (~> 2.3)
       backports
-      faraday (~> 0.8)
+      faraday (~> 0.8.7)
       faraday_middleware (~> 0.9)
-      gh
+      gh (~> 0.13)
       highline (~> 1.6)
       launchy (~> 2.1)
-      netrc (~> 0.7)
       pry (~> 0.9)
-      typhoeus
-    typhoeus (0.3.3)
-      mime-types
+      pusher-client (~> 0.4)
+      typhoeus (~> 0.6)
+    typhoeus (0.6.7)
+      ethon (~> 0.6.2)
     tzinfo (0.3.38)
+    websocket (1.0.7)
     xml-simple (1.1.3)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -217,5 +223,5 @@ DEPENDENCIES
   sinatra
   terminal-notifier-guard
   thin
-  travis
+  travis (~> 1.6)
   xml-simple
