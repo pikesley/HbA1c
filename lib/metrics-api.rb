@@ -51,6 +51,8 @@ class MetricsApi < Sinatra::Base
   end
 
   get '/metrics' do
+    protected!
+
     data = {
         "metrics" => Metric.all.distinct(:name).sort.map do |name|
           {

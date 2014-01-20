@@ -57,7 +57,7 @@ namespace :export do
       ]
 
       puts command
- #     `#{command}`
+      `#{command}`
     end
   end
 end

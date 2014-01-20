@@ -2,11 +2,20 @@ Feature: Diabetes metrics
 
   Background:
     Given I send and accept JSON
-  
+
+  Scenario: Require authorisation to read
+    Given there is a metric in the database with the name "glucose"
+    And there is a metric in the database with the name "lantus"
+    And there is a metric in the database with the name "humalog"
+    And I authenticate as the user "doge" with the password "wow"
+    When I send a GET request to "metrics"
+    Then the response status should be "401"
+
   Scenario: GET list of all diabetes metrics
     Given there is a metric in the database with the name "glucose"
     And there is a metric in the database with the name "lantus"
     And there is a metric in the database with the name "humalog"
+    And I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics"
     Then the response status should be "200"
     And the JSON response should have "$.metrics[0].name" with the text "glucose"

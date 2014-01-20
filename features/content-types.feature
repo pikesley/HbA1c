@@ -7,26 +7,31 @@ Feature: Content Types
 
   Scenario: GET list with JSON content type
     Given I send and accept JSON
+    And I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "/"
     Then the response status should be "406"    
 
   Scenario: GET list with JSON content type
     Given I send and accept JSON
+    And I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics"
     Then the response status should be "200"    
     And the response content type should be JSON
     
   Scenario: GET list with JSON extension
+    Given I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics.json"
     Then the response status should be "200"    
     And the response content type should be JSON
   
   Scenario: GET list with HTML content type
     Given I send and accept HTML
+    And I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics"
     Then the response status should be "406"    
     
   Scenario: GET list with HTML extension
+    Given I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics.html"
     Then the response status should be "406"
     
