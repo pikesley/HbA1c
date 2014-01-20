@@ -16,7 +16,8 @@ gem 'rack-conneg'
 gem 'iso8601'
 gem 'xml-simple'
 
-group :test do
+group :development, :test do
+  gem 'travis' #, '~> 1.6'
   gem 'capybara-webkit'
   gem 'cucumber'
   gem 'cucumber-sinatra'
