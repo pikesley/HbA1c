@@ -7,7 +7,7 @@ Feature: Diabetes metrics
     Given there is a metric in the database with the name "glucose"
     And there is a metric in the database with the name "lantus"
     And there is a metric in the database with the name "humalog"
-    And I authenticate as the user "doge" with the password "wow"
+    And I do not authenticate
     When I send a GET request to "metrics"
     Then the response status should be "401"
 

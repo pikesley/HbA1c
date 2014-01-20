@@ -16,3 +16,7 @@ Given(/^it has a datetime of "(.*?)"$/) do |datetime|
   @metric.datetime = datetime
   @metric.save
 end
+
+Given(/^I do not authenticate$/) do
+
+end
