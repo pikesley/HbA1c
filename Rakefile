@@ -52,11 +52,12 @@ namespace :export do
           ENV['METRICS_API_USERNAME'],
           ENV['METRICS_API_PASSWORD'],
           j,
-          'http://localhost:4567',
+          'http://pancreas-api.herokuapp.com/',
           metric
       ]
 
-      `#{command}`
+      puts command
+ #     `#{command}`
     end
   end
 end
