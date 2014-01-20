@@ -42,8 +42,8 @@ class MetricsApi < Sinatra::Base
     respond_to do |wants|
       wants.html {
         haml :index, :locals => {
-            :title => 'Metrics API',
-            :text  => 'Metrics API',
+            :title => 'HbA1c',
+            :text  => 'HbA1c',
             :bootstrap_theme => 'http://bootswatch.com/simplex/bootstrap.min.css',
             :github          => {
                 :user    => 'pikesley',
