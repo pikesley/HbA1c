@@ -2,6 +2,7 @@ Feature: Diabetes time ranges
 
   Background:
     Given I send and accept JSON
+    And I authenticate as the user "sam" with the password "insulin"
     And there is a metric in the database with the name "humalog"
     And it has a datetime of "2014-01-14T12:25:30+00:00"
     And it has a category of "Lunch"

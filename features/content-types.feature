@@ -41,6 +41,7 @@ Feature: Content Types
   
   Scenario: GET metric with JSON content type
     Given I send and accept JSON
+    And I authenticate as the user "sam" with the password "insulin"
     And there is a metric in the database with the name "membership-coverage"
     When I send a GET request to "metrics/membership-coverage"
     Then the response status should be "200"    
@@ -48,17 +49,20 @@ Feature: Content Types
     
   Scenario: GET metric with JSON extension
     Given there is a metric in the database with the name "membership-coverage"
+    And I authenticate as the user "sam" with the password "insulin"
     When I send a GET request to "metrics/membership-coverage.json"
     Then the response status should be "200"    
     And the response content type should be JSON
   
   Scenario: GET metric with HTML content type
     Given I send and accept HTML
+    And I authenticate as the user "sam" with the password "insulin"
     And there is a metric in the database with the name "membership-coverage"
     When I send a GET request to "metrics/membership-coverage"
     Then the response status should be "406"    
     
   Scenario: GET metric with HTML extension
+    Given I authenticate as the user "sam" with the password "insulin"
     Given there is a metric in the database with the name "membership-coverage"
     When I send a GET request to "metrics/membership-coverage.html"
     Then the response status should be "406"    

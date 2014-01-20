@@ -58,7 +58,8 @@ Feature: Diabetes metrics
     And the value of the metric should be "4.5"
 
   Scenario: GETing structured data
-    Given there is a metric in the database with the name "glucose"
+    Given I authenticate as the user "sam" with the password "insulin"
+    And there is a metric in the database with the name "glucose"
     And it has a datetime of "2014-01-18T07:09:54+00:00"
     And it has a category of "Breakfast"
     And it has a value of "6.3"
@@ -78,7 +79,8 @@ Feature: Diabetes metrics
     And the JSON response should have "$.value" with the text "4.5"
 
   Scenario: GETing data for a single datetime
-    Given there is a metric in the database with the name "glucose"
+    Given I authenticate as the user "sam" with the password "insulin"
+    And there is a metric in the database with the name "glucose"
     And it has a datetime of "2014-01-17T19:09:07+00:00"
     And it has a value of "6.8"
     And there is a metric in the database with the name "glucose"
