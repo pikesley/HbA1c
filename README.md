@@ -32,11 +32,13 @@ Anyway, I'll clean that up and get it running as a Heroku worker task thingy som
    
 (expects Ruby 2.1.0)
 
-You need a Dropbox API key and secret from [here](https://www.dropbox.com/developers/apps), then the [dropbox-api](https://github.com/futuresimple/dropbox-api) gem comes with a splendid Rake task
+For the Dropbox bit, you need a Dropbox API key and secret from [here](https://www.dropbox.com/developers/apps), then the [dropbox-api](https://github.com/futuresimple/dropbox-api) gem comes with a splendid Rake task
 
     rake dropbox:authorize
 
 to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ (see _.env.example_) and you should be good to go.
+
+Actually running the app requires some more docs which I'm not going to write now.
 
 ## Next steps
 
