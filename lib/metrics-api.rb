@@ -44,6 +44,12 @@ class MetricsApi < Sinatra::Base
         haml :index, :locals => {
             :title => 'Metrics API',
             :text  => 'Metrics API',
+            :bootstrap_theme => 'http://bootswatch.com/simplex/bootstrap.min.css',
+            :github          => {
+                :user    => 'pikesley',
+                :project => 'HbA1c',
+                :ribbon  => 'right_gray_6d6d6d'
+            }
         }
       }
       wants.other { error_406 }
