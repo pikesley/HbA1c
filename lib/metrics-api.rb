@@ -44,7 +44,6 @@ class MetricsApi < Sinatra::Base
         haml :index, :locals => {
             :title => 'Metrics API',
             :text  => 'Metrics API',
-            #        :bootstrap_theme => '../lavish-bootstrap.css'
         }
       }
       wants.other { error_406 }
@@ -72,6 +71,8 @@ class MetricsApi < Sinatra::Base
     j        = JSON.parse request.body.read
     j[:name] = params[:metric]
 
+#    require 'pry'
+#    binding.pry
     if Metric.where(:datetime => DateTime.parse(j["datetime"])).first
       if Metric.where(:datetime => DateTime.parse(j["datetime"])).update(value: j["value"])
         return 201
