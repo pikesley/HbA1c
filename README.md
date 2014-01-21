@@ -14,7 +14,7 @@ I collect blood-glucose and medication data with [this](http://www.medivo.com/on
 
 So we built [this thing](https://metrics.theodi.org/) at the [Open Data Institute](http://theodi.org), which already does quite a lot of what I want. I forked it and spent the recent [Real Food Hack](http://lanyrd.com/2014/real-food-hack/) weekend bending it to my will. I've just got it cooking on Heroku, and I'll document the full API when I've nailed it down.
 
-## Rails task
+## Rake task
 
 Right now I have a (shittily-named, now I think about it) Rake task:
 
