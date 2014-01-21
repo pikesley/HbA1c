@@ -101,7 +101,7 @@ class MetricsApi < Sinatra::Base
   get '/metrics/:metric' do
     protected!
 
-    @metric = Metric.where(name: params[:metric]).order_by(:time.asc).last
+    @metric = Metric.where(name: params[:metric]).order_by(:datetime.asc).last
     respond_to do |wants|
       wants.json { @metric.to_json }
       wants.other { error_406 }
