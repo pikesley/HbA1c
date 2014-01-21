@@ -13,6 +13,9 @@ require 'cucumber/api_steps'
 require 'database_cleaner'
 require 'database_cleaner/cucumber'
 
+require 'coveralls'
+Coveralls.wear!
+
 DatabaseCleaner.strategy = :truncation
 
 Capybara.app = MetricsApi

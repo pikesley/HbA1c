@@ -1,4 +1,4 @@
-##Copyright (c) 2013 The Open Data Institute
+##Copyright (c) 2013 Sam Pikesley
 
 #MIT License
 
