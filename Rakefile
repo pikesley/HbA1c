@@ -52,7 +52,7 @@ namespace :export do
           ENV['METRICS_API_USERNAME'],
           ENV['METRICS_API_PASSWORD'],
           j,
-          'http://pancreas-api.herokuapp.com/',
+          'https://pancreas-api.herokuapp.com/',
           metric
       ]
 
