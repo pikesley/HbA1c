@@ -12,7 +12,56 @@ I collect blood-glucose and medication data with [this](http://www.medivo.com/on
 
 ## The ODI's metrics-api
 
-So we built [this thing](https://metrics.theodi.org/) at the [Open Data Institute](http://theodi.org), which already does quite a lot of what I want. I forked it and spent the recent [Real Food Hack](http://lanyrd.com/2014/real-food-hack/) weekend bending it to my will. I've just got it cooking on Heroku, and I'll document the full API when I've nailed it down.
+So we built [this thing](https://metrics.theodi.org/) at the [Open Data Institute](http://theodi.org), which already does quite a lot of what I want. I forked it and spent the recent [Real Food Hack](http://lanyrd.com/2014/real-food-hack/) weekend bending it to my will.
+
+## API
+
+###Fetching data
+
+All requests should include `Accept: application/json`
+
+#### `GET https://pancreas-api.herokuapp.com/metrics[.json]`
+
+Fetches list of available metrics
+
+#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}[.json]`
+
+Fetches latest value for specified metric
+
+#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}/{time}`
+
+Fetch the most recent value of the metric at the specified time, where time is an ISO8601 date/time
+
+#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}/{from}/{to}`
+
+Fetch all values of the metric between the specified times. from and to can be either:
+
+* An ISO8601 date/time
+* An ISO8601 duration
+* *, meaning unspecified
+
+
+### Adding data
+
+#### `POST https://pancreas-api.herokuapp.com/metrics/{metric-name}`
+
+using a JSON content type, and with the following JSON in the body:
+
+    {
+      "datetime": "{iso8601-date-time}",
+      "category": "{category}"
+      "value": "{value}"
+    }
+
+where
+
+* `category` is one of
+  * `Breakfast`
+  * `After breakfast`
+  * etc
+* `value` is a Float, with
+  * medication metrics assumed to have units of [Insulin Units](http://en.wikipedia.org/wiki/Insulin_therapy#The_dosage_units)
+  * glucose metrics assumed to have units of _mmol/L_
 
 ## Setting it up
 
