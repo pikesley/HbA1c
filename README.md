@@ -99,7 +99,7 @@ There should see your new database; create a user and password on it. Then bring
     ➔ MONGOLAB_PASS=i_r_secure_password
     ➔ heroku config:set MONGOLAB_URI="mongodb://${MONGOLAB_USER}:${MONGOLAB_PASS}@ds063158.mongolab.com:63158/heroku_app21605738"
     Setting config vars and restarting pancreas-api... done, v4
-    MONGOLAB_URI: mongodb://hba1c: i_r_secure_password@ds063158.mongolab.com:63158/heroku_app21605738
+    MONGOLAB_URI: mongodb://hba1c:i_r_secure_password@ds063158.mongolab.com:63158/heroku_app21605738
 
 If you look at _mongoid.yml_, you'll see this:
 
@@ -137,6 +137,8 @@ And see if it worked:
 
     heroku open
     
+ You should now be looking at, erm, this README
+    
 ### Import some data
 
 We'll use the Heroku scheduler to run the data import job, but let's test that first. Do a data export from OnTrack:
@@ -166,6 +168,8 @@ This task would obviously be better handled by a robot:
     heroku addons:open scheduler
 
 Add a new task, `bundle exec rake export:jsonify`, to run once a day.
+
+And that's that.
 
 ## Dashboard
 
