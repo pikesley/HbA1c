@@ -4,7 +4,7 @@ ENV['RACK_ENV'] = 'test'
 ENV['METRICS_API_USERNAME'] = 'sam'
 ENV['METRICS_API_PASSWORD'] = 'insulin'
 
-require File.join(File.dirname(__FILE__), '..', '..', 'lib/metrics-api.rb')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib/pancreas-api.rb')
 
 require 'capybara'
 require 'capybara/cucumber'
@@ -18,18 +18,18 @@ Coveralls.wear!
 
 DatabaseCleaner.strategy = :truncation
 
-Capybara.app = MetricsApi
+Capybara.app = PancreasApi
 
-class MetricsApiWorld
+class PancreasApiWorld
   include Capybara::DSL
   include RSpec::Expectations
   include RSpec::Matchers
   
   def app
-    MetricsApi
+    PancreasApi
   end
 end
 
 World do
-  MetricsApiWorld.new
+  PancreasApiWorld.new
 end

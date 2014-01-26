@@ -1,45 +1,22 @@
 require 'sinatra'
 require 'haml'
 require 'mongoid'
-require_relative 'models/metrics'
-require 'rack/conneg'
 require 'iso8601'
 require 'dotenv'
 require 'kramdown'
+require 'rack/conneg'
 require 'rack-google-analytics'
 
+require_relative 'models/metrics'
+
+require_relative 'pancreas-api/helpers'
+require_relative 'pancreas-api/racks'
+require_relative 'pancreas-api/errors'
+
 Dotenv.load unless ENV['RACK_ENV'] == 'test'
+Mongoid.load!(File.expand_path('../mongoid.yml', File.dirname(__FILE__)), ENV['RACK_ENV'])
 
-Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
-
-class MetricsApi < Sinatra::Base
-
-  use Rack::GoogleAnalytics, :tracker => 'UA-47486297-1'
-
-  helpers do
-    def protected!
-      return if authorized?
-      headers['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
-      halt 401, "Not authorized\n"
-    end
-
-    def authorized?
-      @auth ||= Rack::Auth::Basic::Request.new(request.env)
-      @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ENV['METRICS_API_USERNAME'], ENV['METRICS_API_PASSWORD']]
-    end
-  end
-
-  use(Rack::Conneg) { |conneg|
-    conneg.set :accept_all_extensions, false
-    conneg.set :fallback, :html
-    conneg.provide([:json])
-  }
-
-  before do
-    if negotiated?
-      content_type negotiated_type
-    end
-  end
+class PancreasApi < Sinatra::Base
 
   get '/' do
     respond_to do |wants|
@@ -59,38 +36,21 @@ class MetricsApi < Sinatra::Base
     end
   end
 
-  get '/metrics' do
-    protected!
-
-    data = {
-        "metrics" => Metric.all.distinct(:name).sort.map do |name|
-          {
-              name: name,
-              url:  "https://#{request.host}/metrics/#{name}.json"
-          }
-        end
-    }
-    respond_to do |wants|
-      wants.json { data.to_json }
-      wants.other { error_406 }
-    end
-  end
-
   post '/metrics/:metric' do
     protected!
 
     j        = JSON.parse request.body.read
     j[:name] = params[:metric]
 
-#    require 'pry'
-#    binding.pry
-    if Metric.where(:datetime => DateTime.parse(j["datetime"])).first
-      if Metric.where(:datetime => DateTime.parse(j["datetime"])).update(value: j["value"])
+    if lookup(j).first
+      if lookup(j).update value: j['value']
         return 201
       else
         return 500
       end
+
     else
+
       @metric = Metric.new j
 
       if @metric.save
@@ -98,6 +58,27 @@ class MetricsApi < Sinatra::Base
       else
         return 500
       end
+    end
+  end
+
+  get '/metrics' do
+    protected!
+
+    data = {
+        'metrics' => Metric.all.distinct(:name).sort.map do |name|
+          {
+              name: name,
+              url:  'https://%s/metrics/%s' % [
+                  request.host,
+                  name
+              ]
+          }
+        end
+    }
+
+    respond_to do |wants|
+      wants.json { data.to_json }
+      wants.other { error_406 }
     end
   end
 
@@ -114,8 +95,14 @@ class MetricsApi < Sinatra::Base
   get '/metrics/:metric/:datetime' do
     protected!
 
-    time = DateTime.parse(params[:datetime]) rescue error_400("'#{params[:datetime]}' is not a valid ISO8601 date/time.")
-    @metric = Metric.where(name: params[:metric], :datetime.lte => time).order_by(:datetime.asc).last
+    time = DateTime.parse(params[:datetime]) rescue
+        error_400("'%s' is not a valid ISO8601 date/time." % params[:datetime])
+
+    @metric = Metric.where(
+        name: params[:metric],
+        :datetime.lte => time
+    ).order_by(:datetime.asc).last
+
     respond_to do |wants|
       wants.json { @metric.to_json }
       wants.other { error_406 }
@@ -170,16 +157,6 @@ class MetricsApi < Sinatra::Base
       wants.json { data.to_json }
       wants.other { error_406 }
     end
-  end
-
-  def error_406
-    content_type 'text/plain'
-    error 406, "Not Acceptable"
-  end
-
-  def error_400(error)
-    content_type 'text/plain'
-    error 400, { :status => error }.to_json
   end
 
   # start the server if ruby file executed directly
