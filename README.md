@@ -14,16 +14,6 @@ I collect blood-glucose and medication data with [this](http://www.medivo.com/on
 
 So we built [this thing](https://metrics.theodi.org/) at the [Open Data Institute](http://theodi.org), which already does quite a lot of what I want. I forked it and spent the recent [Real Food Hack](http://lanyrd.com/2014/real-food-hack/) weekend bending it to my will. I've just got it cooking on Heroku, and I'll document the full API when I've nailed it down.
 
-## Rake task
-
-Right now I have a (shittily-named, now I think about it) Rake task:
-
-    rake export:jsonify
-    
-which grabs the newest file from a Dropbox folder called _ontrack/_ (configurable in _config/dropbox.yaml_), parses it into JSON, and rams it through my API. Using cURL. And currently running only off my Mac. Man, this bit it such a hack. 
-
-Anyway, I'll clean that up and get it running as a Heroku worker task thingy sometime. 
-
 ## Setting it up
 
 You need Ruby 2.1.0 installed. Now:
@@ -71,15 +61,63 @@ If you look at _mongoid.yml_, you'll see this:
           
 So because this stuff is all made of magic, this will now work.
 
-
+### Dropbox integration
 
 For the Dropbox bit, you need a Dropbox API key and secret from [here](https://www.dropbox.com/developers/apps), then the [dropbox-api](https://github.com/futuresimple/dropbox-api) gem comes with a splendid Rake task
 
     rake dropbox:authorize
 
-to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ (see _.env.example_) and you should be good to go.
+to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ like this. And while you're at it, choose a login and password for the API:
+
+    DROPBOX_APP_KEY: ive_got_the_key
+    DROPBOX_APP_SECRET: ive_got_the_secret
+    DROPBOX_TOKEN: i_also_have_a_token
+    DROPBOX_SECRET: and_another_secret
+    METRICS_API_USERNAME: hba1c
+    METRICS_API_PASSWORD: ifyouusethispasswordbadthingswillhappen
+
+Now you need to set these in the Heroku environment as well. Here's an ugly hack to do just that thing:
+
+    for line in `cat .env` ; do heroku config:set `echo ${line} | sed "s/: /=/"` ; done
+    
+Time to push the code to Heroku:
+
+    git push heroku master
+
+And see if it worked:
+
+    heroku open
+    
+### Import some data
+
+We'll use the Heroku scheduler to run the data import job, but let's test that first. Do a data export from OnTrack:
+
+* Yes, you want to 'email' it
+* Into a Dropbox directory called _ontrack_
+* As XML
+
+Now
+
+    heroku run RACK_ENV=production bundle exec rake export:jsonify
 
 
-## Next steps
+(Yes, that's a shittly-named task. Also that job currently has _no tests_, and I know of at least one bug in the importer. And it's shelling out to cURL. This is not my best work).
 
-From here, it's a short hop to a beautiful [Dashing](http://shopify.github.io/dashing/) dashboard, I expect.
+Anyway, you _should_ see a load of curl lines whizzing past, and when it's finished, some data should have been imported. You can test it with something like:
+
+    curl -X GET -H 'Accept: application/json' --basic -u user:password https://pancreas-api.herokuapp.com/metrics/glucose
+
+which should return some JSON for the latest blood-glucose event.
+
+### Heroku scheduler
+
+This task would obviously be better handled by a robot:
+
+    heroku addons:add scheduler
+    heroku addons:open scheduler
+
+Add a new task, `bundle exec rake export:jsonify`, to run once a day.
+
+## Dashboard
+
+The obvious next step is to put a [beautiful Dashing dashboard](https://github.com/pikesley/diabetes-dashboard) on the front of this.
