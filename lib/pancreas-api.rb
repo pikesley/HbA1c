@@ -40,7 +40,7 @@ class PancreasApi < Sinatra::Base
     protected!
 
     data = {
-        "metrics" => Metric.all.distinct(:name).sort.map do |name|
+        'metrics' => Metric.all.distinct(:name).sort.map do |name|
           {
               name: name,
           }
