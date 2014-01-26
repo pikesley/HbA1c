@@ -1,0 +1,17 @@
+!!! 5
+%html(lang="en")
+  %head
+    %title= title
+    %link{:rel => 'stylesheet', :href => '//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css', :type => "text/css"}
+    -if defined? bootstrap_theme
+      %link{:rel => 'stylesheet', :href => bootstrap_theme, :type => "text/css"}
+
+  %body
+    -if defined? github[:ribbon]
+      %a{:href => "https://github.com/%s/%s" % [ github[:user], github[:project] ] }
+        %img{:style => "position: absolute; top: 0; right: 0; border: 0;",
+           :src => "https://s3.amazonaws.com/github/ribbons/forkme_%s.png" % [ github[:ribbon] ],
+           :alt => "Fork me on GitHub"}
+    .body
+      .container
+        = yield
