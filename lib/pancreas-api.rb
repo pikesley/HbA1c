@@ -8,8 +8,10 @@ require 'kramdown'
 require 'rack-google-analytics'
 
 require_relative 'models/metrics'
+
 require_relative 'pancreas-api/helpers'
 require_relative 'pancreas-api/racks'
+require_relative 'pancreas-api/errors'
 
 Dotenv.load unless ENV['RACK_ENV'] == 'test'
 Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
@@ -147,15 +149,7 @@ class PancreasApi < Sinatra::Base
     end
   end
 
-  def error_406
-    content_type 'text/plain'
-    error 406, "Not Acceptable"
-  end
 
-  def error_400(error)
-    content_type 'text/plain'
-    error 400, { :status => error }.to_json
-  end
 
   # start the server if ruby file executed directly
   run! if app_file == $0
