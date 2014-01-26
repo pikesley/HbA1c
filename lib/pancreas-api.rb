@@ -1,10 +1,10 @@
 require 'sinatra'
 require 'haml'
 require 'mongoid'
-require 'rack/conneg'
 require 'iso8601'
 require 'dotenv'
 require 'kramdown'
+require 'rack/conneg'
 require 'rack-google-analytics'
 
 require_relative 'models/metrics'
@@ -14,7 +14,7 @@ require_relative 'pancreas-api/racks'
 require_relative 'pancreas-api/errors'
 
 Dotenv.load unless ENV['RACK_ENV'] == 'test'
-Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
+Mongoid.load!(File.expand_path('../mongoid.yml', File.dirname(__FILE__)), ENV['RACK_ENV'])
 
 class PancreasApi < Sinatra::Base
 
@@ -148,7 +148,6 @@ class PancreasApi < Sinatra::Base
       wants.other { error_406 }
     end
   end
-
 
 
   # start the server if ruby file executed directly
