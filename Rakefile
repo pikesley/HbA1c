@@ -22,10 +22,10 @@ namespace :export do
 
     Dotenv.load
     Dropbox::API::Config.mode       = 'dropbox'
-    Dropbox::API::Config.app_key    = ENV['APP_KEY']
-    Dropbox::API::Config.app_secret = ENV['APP_SECRET']
+    Dropbox::API::Config.app_key    = ENV['DROPBOX_APP_KEY']
+    Dropbox::API::Config.app_secret = ENV['DROPBOX_APP_SECRET']
 
-    client = Dropbox::API::Client.new(:token => ENV['TOKEN'], :secret => ENV['SECRET'])
+    client = Dropbox::API::Client.new(:token => ENV['DROPBOX_TOKEN'], :secret => ENV['DROPBOX_SECRET'])
 
     data = XmlSimple.xml_in (client.download (client.ls(conf['folder']).sort { |x, y| x[:revision] <=> y[:revision] })[-1].path),
                             :ForceArray => false
