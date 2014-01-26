@@ -24,4 +24,9 @@ class PancreasApi < Sinatra::Base
         :name     => item[:name]
     )
   end
+
+  def get_duration interval
+    ISO8601::Duration.new(interval).to_seconds.seconds rescue
+        error_400("'%s' is not a valid ISO8601 duration." % interval)
+  end
 end
