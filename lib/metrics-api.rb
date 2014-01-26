@@ -42,9 +42,9 @@ class MetricsApi < Sinatra::Base
     respond_to do |wants|
       wants.html {
         haml :index, :locals => {
-            :title => 'HbA1c',
-            :text  => 'HbA1c',
-            :bootstrap_theme => 'http://bootswatch.com/simplex/bootstrap.min.css',
+            :title => 'pancreas-api',
+            :text  => 'pancreas-api',
+            :bootstrap_theme => '../lavish-bootstrap.css',
             :github          => {
                 :user    => 'pikesley',
                 :project => 'HbA1c',
