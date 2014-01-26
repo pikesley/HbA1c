@@ -43,9 +43,7 @@ class PancreasApi < Sinatra::Base
     j[:name] = params[:metric]
 
     if lookup(j).first
-      if lookup(j).update(
-          value: j['value']
-      )
+      if lookup(j).update value: j['value']
         return 201
       else
         return 500
@@ -154,8 +152,6 @@ class PancreasApi < Sinatra::Base
       wants.other { error_406 }
     end
   end
-
-
 
   # start the server if ruby file executed directly
   run! if app_file == $0
