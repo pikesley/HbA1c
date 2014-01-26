@@ -1,9 +1,8 @@
-require 'cucumber/rake/task'
-
-Cucumber::Rake::Task.new
-
-task :default => [:cucumber]
-
+if ENV['RACK_ENV']=='test'
+  require 'cucumber/rake/task'
+  Cucumber::Rake::Task.new
+  task :default => [:cucumber]
+end
 
 require 'dropbox-api'
 require 'dotenv'
@@ -52,7 +51,7 @@ namespace :export do
           ENV['METRICS_API_USERNAME'],
           ENV['METRICS_API_PASSWORD'],
           j,
-          'http://pancreas-api.herokuapp.com/',
+          'https://pancreas-api.herokuapp.com/',
           metric
       ]
 
