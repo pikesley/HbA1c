@@ -1,4 +1,4 @@
-if ENV['RAILS_ENV']=='test'
+if ENV['RACK_ENV']=='test'
   require 'cucumber/rake/task'
   Cucumber::Rake::Task.new
   task :default => [:cucumber]
