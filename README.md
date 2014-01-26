@@ -18,13 +18,15 @@ So we built [this thing](https://metrics.theodi.org/) at the [Open Data Institut
 
 ###Fetching data
 
-All requests should include `Accept: application/json`
+All requests should include `Accept: application/json`, and provide basic auth credentials, e.g.
 
-#### `GET https://pancreas-api.herokuapp.com/metrics[.json]`
+    curl -X GET -H 'Accept: application/json' --basic -u user:password https://pancreas-api.herokuapp.com/metrics/glucose
+
+#### `GET https://pancreas-api.herokuapp.com/metrics`
 
 Fetches list of available metrics
 
-#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}[.json]`
+#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}`
 
 Fetches latest value for specified metric
 
@@ -45,7 +47,7 @@ Fetch all values of the metric between the specified times. from and to can be e
 
 #### `POST https://pancreas-api.herokuapp.com/metrics/{metric-name}`
 
-using a JSON content type, and with the following JSON in the body:
+All requests should include `Content-type: application/json`, and provide basic auth credentials, and a JSON payload like:
 
     {
       "datetime": "{iso8601-date-time}",
