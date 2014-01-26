@@ -17,4 +17,11 @@ class PancreasApi < Sinatra::Base
           ]
     end
   end
+
+  def lookup item
+    Metric.where(
+        :datetime => DateTime.parse(item['datetime']),
+        :name     => item[:name]
+    )
+  end
 end

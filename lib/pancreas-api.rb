@@ -42,15 +42,8 @@ class PancreasApi < Sinatra::Base
     j        = JSON.parse request.body.read
     j[:name] = params[:metric]
 
-    if Metric.where(
-        :datetime => DateTime.parse(j['datetime']),
-        :name     => j[:name]
-    ).first
-
-      if Metric.where(
-          :datetime => DateTime.parse(j['datetime']),
-          :name     => j[:name]
-      ).update(
+    if lookup(j).first
+      if lookup(j).update(
           value: j['value']
       )
         return 201
@@ -161,6 +154,7 @@ class PancreasApi < Sinatra::Base
       wants.other { error_406 }
     end
   end
+
 
 
   # start the server if ruby file executed directly
