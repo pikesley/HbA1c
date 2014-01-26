@@ -1,19 +1,19 @@
 require 'sinatra'
 require 'haml'
 require 'mongoid'
-require_relative 'models/metrics'
 require 'rack/conneg'
 require 'iso8601'
 require 'dotenv'
 require 'kramdown'
 require 'rack-google-analytics'
 
-Dotenv.load unless ENV['RACK_ENV'] == 'test'
+require_relative 'models/metrics'
+require_relative 'pancreas-api/helpers'
 
+Dotenv.load unless ENV['RACK_ENV'] == 'test'
 Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
-class MetricsApi < Sinatra::Base
-
+class PancreasApi < Sinatra::Base
   use Rack::GoogleAnalytics, :tracker => 'UA-47486297-1'
 
   helpers do

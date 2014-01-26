@@ -2,6 +2,6 @@ require 'rubygems'
 
 ENV['RACK_ENV'] ||= 'development'
 
-require File.join(File.dirname(__FILE__), 'lib/metrics-api.rb')
+require File.join(File.dirname(__FILE__), 'lib/pancreas-api.rb')
 
-run MetricsApi
+run PancreasApi
