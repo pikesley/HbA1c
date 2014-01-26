@@ -11,6 +11,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    actionpack (1.4.0)
     activemodel (3.2.16)
       activesupport (= 3.2.16)
       builder (~> 3.0.0)
@@ -134,6 +135,9 @@ GEM
     rack (1.5.2)
     rack-conneg (0.1.5)
       rack (>= 1.0)
+    rack-google-analytics (1.0.0)
+      actionpack
+      activesupport
     rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
@@ -217,6 +221,7 @@ DEPENDENCIES
   kramdown
   mongoid (~> 3)
   rack-conneg
+  rack-google-analytics
   rack-test
   rake
   rspec

@@ -15,6 +15,7 @@ gem 'mongoid', '~> 3'
 gem 'rack-conneg'
 gem 'iso8601'
 gem 'xml-simple'
+gem 'rack-google-analytics'
 
 group :development, :test do
   gem 'travis', '~> 1.6'

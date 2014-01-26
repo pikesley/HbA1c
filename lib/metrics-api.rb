@@ -6,12 +6,15 @@ require 'rack/conneg'
 require 'iso8601'
 require 'dotenv'
 require 'kramdown'
+require 'rack-google-analytics'
 
 Dotenv.load unless ENV['RACK_ENV'] == 'test'
 
 Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
 class MetricsApi < Sinatra::Base
+
+  use Rack::GoogleAnalytics, :tracker => 'UA-47486297-1'
 
   helpers do
     def protected!
@@ -42,8 +45,8 @@ class MetricsApi < Sinatra::Base
     respond_to do |wants|
       wants.html {
         haml :index, :locals => {
-            :title => 'pancreas-api',
-            :text  => 'pancreas-api',
+            :title           => 'pancreas-api',
+            :text            => 'pancreas-api',
             :bootstrap_theme => '../lavish-bootstrap.css',
             :github          => {
                 :user    => 'pikesley',
