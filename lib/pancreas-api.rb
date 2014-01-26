@@ -36,6 +36,40 @@ class PancreasApi < Sinatra::Base
     end
   end
 
+  post '/metrics/:metric' do
+    protected!
+
+    j        = JSON.parse request.body.read
+    j[:name] = params[:metric]
+
+    if Metric.where(
+        :datetime => DateTime.parse(j['datetime']),
+        :name     => j[:name]
+    ).first
+
+      if Metric.where(
+          :datetime => DateTime.parse(j['datetime']),
+          :name     => j[:name]
+      ).update(
+          value: j['value']
+      )
+        return 201
+      else
+        return 500
+      end
+
+    else
+
+      @metric = Metric.new j
+
+      if @metric.save
+        return 201
+      else
+        return 500
+      end
+    end
+  end
+
   get '/metrics' do
     protected!
 
@@ -54,29 +88,6 @@ class PancreasApi < Sinatra::Base
     respond_to do |wants|
       wants.json { data.to_json }
       wants.other { error_406 }
-    end
-  end
-
-  post '/metrics/:metric' do
-    protected!
-
-    j        = JSON.parse request.body.read
-    j[:name] = params[:metric]
-
-    if Metric.where(:datetime => DateTime.parse(j['datetime']), :name => j[:name]).first
-      if Metric.where(:datetime => DateTime.parse(j['datetime']), :name => j[:name]).update(value: j['value'])
-        return 201
-      else
-        return 500
-      end
-    else
-      @metric = Metric.new j
-
-      if @metric.save
-        return 201
-      else
-        return 500
-      end
     end
   end
 
