@@ -19,11 +19,11 @@ Feature: Diabetes metrics
     When I send a GET request to "metrics"
     Then the response status should be "200"
     And the JSON response should have "$.metrics[0].name" with the text "glucose"
-    And the JSON response should have "$.metrics[0].url" with the text "https://example.org/metrics/glucose.json"
+    And the JSON response should have "$.metrics[0].url" with the text "https://example.org/metrics/glucose"
     And the JSON response should have "$.metrics[1].name" with the text "humalog"
-    And the JSON response should have "$.metrics[1].url" with the text "https://example.org/metrics/humalog.json"
+    And the JSON response should have "$.metrics[1].url" with the text "https://example.org/metrics/humalog"
     And the JSON response should have "$.metrics[2].name" with the text "lantus"
-    And the JSON response should have "$.metrics[2].url" with the text "https://example.org/metrics/lantus.json"
+    And the JSON response should have "$.metrics[2].url" with the text "https://example.org/metrics/lantus"
 
   Scenario: POSTing glucose data
     Given I authenticate as the user "sam" with the password "insulin"
