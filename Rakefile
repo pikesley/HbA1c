@@ -1,9 +1,8 @@
-require 'cucumber/rake/task'
-
-Cucumber::Rake::Task.new
-
-task :default => [:cucumber]
-
+if ENV['RAILS_ENV']=='test'
+  require 'cucumber/rake/task'
+  Cucumber::Rake::Task.new
+  task :default => [:cucumber]
+end
 
 require 'dropbox-api'
 require 'dotenv'
