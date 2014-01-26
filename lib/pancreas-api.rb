@@ -16,12 +16,6 @@ Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['R
 
 class PancreasApi < Sinatra::Base
 
-  before do
-    if negotiated?
-      content_type negotiated_type
-    end
-  end
-
   get '/' do
     respond_to do |wants|
       wants.html {

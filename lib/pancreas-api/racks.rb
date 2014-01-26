@@ -6,4 +6,10 @@ class PancreasApi < Sinatra::Base
     conneg.set :fallback, :html
     conneg.provide([:json])
   end
+
+  before do
+    if negotiated?
+      content_type negotiated_type
+    end
+  end
 end
