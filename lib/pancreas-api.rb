@@ -116,11 +116,11 @@ class PancreasApi < Sinatra::Base
     end_date = DateTime.parse(params[:to]) rescue nil
 
     if params[:from] =~ /^P/
-      start_date = end_date - ISO8601::Duration.new(params[:from]).to_seconds.seconds rescue error_400("'#{params[:from]}' is not a valid ISO8601 duration.")
+      start_date = end_date - get_duration(params[:from])
     end
 
     if params[:to] =~ /^P/
-      end_date = start_date + ISO8601::Duration.new(params[:to]).to_seconds.seconds rescue error_400("'#{params[:to]}' is not a valid ISO8601 duration.")
+      end_date = start_date + get_duration(params[:to])
     end
 
     invalid = []
