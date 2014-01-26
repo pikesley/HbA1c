@@ -43,9 +43,14 @@ class PancreasApi < Sinatra::Base
         'metrics' => Metric.all.distinct(:name).sort.map do |name|
           {
               name: name,
+              url:  'https://%s/metrics/%s' % [
+                  request.host,
+                  name
+              ]
           }
         end
     }
+
     respond_to do |wants|
       wants.json { data.to_json }
       wants.other { error_406 }
@@ -58,10 +63,8 @@ class PancreasApi < Sinatra::Base
     j        = JSON.parse request.body.read
     j[:name] = params[:metric]
 
-#    require 'pry'
-#    binding.pry
-    if Metric.where(:datetime => DateTime.parse(j["datetime"])).first
-      if Metric.where(:datetime => DateTime.parse(j["datetime"])).update(value: j["value"])
+    if Metric.where(:datetime => DateTime.parse(j['datetime']), :name => j[:name]).first
+      if Metric.where(:datetime => DateTime.parse(j['datetime']), :name => j[:name]).update(value: j['value'])
         return 201
       else
         return 500
