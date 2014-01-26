@@ -95,8 +95,14 @@ class PancreasApi < Sinatra::Base
   get '/metrics/:metric/:datetime' do
     protected!
 
-    time = DateTime.parse(params[:datetime]) rescue error_400("'#{params[:datetime]}' is not a valid ISO8601 date/time.")
-    @metric = Metric.where(name: params[:metric], :datetime.lte => time).order_by(:datetime.asc).last
+    time = DateTime.parse(params[:datetime]) rescue
+        error_400("'%s' is not a valid ISO8601 date/time." % params[:datetime])
+
+    @metric = Metric.where(
+        name: params[:metric],
+        :datetime.lte => time
+    ).order_by(:datetime.asc).last
+
     respond_to do |wants|
       wants.json { @metric.to_json }
       wants.other { error_406 }
