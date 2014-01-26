@@ -9,19 +9,12 @@ require 'rack-google-analytics'
 
 require_relative 'models/metrics'
 require_relative 'pancreas-api/helpers'
+require_relative 'pancreas-api/racks'
 
 Dotenv.load unless ENV['RACK_ENV'] == 'test'
 Mongoid.load!(File.expand_path("../mongoid.yml", File.dirname(__FILE__)), ENV['RACK_ENV'])
 
 class PancreasApi < Sinatra::Base
-  use Rack::GoogleAnalytics, :tracker => 'UA-47486297-1'
-
-
-  use(Rack::Conneg) { |conneg|
-    conneg.set :accept_all_extensions, false
-    conneg.set :fallback, :html
-    conneg.provide([:json])
-  }
 
   before do
     if negotiated?
