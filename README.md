@@ -40,7 +40,7 @@ Fetch the most recent value of the metric at the specified time, where time is a
 
 #### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}/{from}/{to}`
 
-Fetch all values of the metric between the specified times. from and to can be either:
+Fetch all values of the metric between the specified times. _from_ and _to_ can be either:
 
 * An ISO8601 date/time
 * An ISO8601 [duration](http://en.wikipedia.org/wiki/ISO_8601#Durations)
@@ -121,7 +121,7 @@ For the Dropbox bit, you need a Dropbox API key and secret from [here](https://w
 
     rake dropbox:authorize
 
-to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ like this. And while you're at it, choose a login and password for the API (which you'll use to GET and POST data):
+to do the Oauth manoeuvres and get the token and secret for you. Put these in _.env_ like this (and while you're at it, choose a login and password for the API, which you'll use to GET and POST data):
 
     DROPBOX_APP_KEY: ive_got_the_key
     DROPBOX_APP_SECRET: ive_got_the_secret
