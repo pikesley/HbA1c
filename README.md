@@ -43,7 +43,7 @@ Fetch the most recent value of the metric at the specified time, where time is a
 Fetch all values of the metric between the specified times. from and to can be either:
 
 * An ISO8601 date/time
-* An ISO8601 duration
+* An ISO8601 [duration](http://en.wikipedia.org/wiki/ISO_8601#Durations)
 * *, meaning unspecified
 
 ### Adding data
