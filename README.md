@@ -26,21 +26,21 @@ All requests should include `Accept: application/json`, and provide basic auth c
 
     curl -X GET -H 'Accept: application/json' --basic -u user:password https://pancreas-api.herokuapp.com/metrics/glucose
 
-#### `GET https://pancreas-api.herokuapp.com/metrics`
+#### `GET /metrics`
 
 Fetches list of available metrics
 
-#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}`
+#### `GET /metrics/:metric_name`
 
 Fetches latest value for specified metric
 
-#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}/{time}`
+#### `GET /metrics/:metric_name/:time`
 
-Fetch the most recent value of the metric at the specified time, where time is an ISO8601 date/time
+Fetch the most recent value of the metric at the specified time, where time is an [ISO8601 date/time](http://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations)
 
-#### `GET https://pancreas-api.herokuapp.com/metrics/{metric_name}/{from}/{to}`
+#### `GET /metrics/:metric_name/:from/:to`
 
-Fetch all values of the metric between the specified times. _from_ and _to_ can be either:
+Fetch all values of the metric between the specified times. _:from_ and _:to_ can be either:
 
 * An ISO8601 date/time
 * An ISO8601 [duration](http://en.wikipedia.org/wiki/ISO_8601#Durations)
@@ -48,9 +48,9 @@ Fetch all values of the metric between the specified times. _from_ and _to_ can 
 
 ### Adding data
 
-#### `POST https://pancreas-api.herokuapp.com/metrics/{metric-name}`
+#### `/metrics/:metric-name`
 
-All requests should include `Content-type: application/json`, and provide basic auth credentials, and a JSON payload like:
+All requests should include `Content-type: application/json`, and provide basic auth credentials, with a JSON payload like:
 
     {
       "datetime": "{iso8601-date-time}",
