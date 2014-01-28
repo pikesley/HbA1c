@@ -67,6 +67,7 @@ where
 * `value` is a Float, with
   * medication metrics assumed to have units of [Insulin Units](http://en.wikipedia.org/wiki/Insulin_therapy#The_dosage_units)
   * glucose metrics assumed to have units of _mmol/L_
+  * HbA1c assumed to be a percentage
 
 ## Setting it up
 
