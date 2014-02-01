@@ -157,7 +157,7 @@ Now
 
     heroku run RACK_ENV=production bundle exec rake export:jsonify
 
-(Yes, that's a shittly-named task. Also that job currently has _no tests_, and I know of at least one bug in the importer. And it's shelling out to cURL. This is not my best work).
+(Yes, that's a shittily-named task. Also that job currently has _no tests_~~, and I know of at least one bug in the importer~~. And it's shelling out to cURL. This is not my best work).
 
 Anyway, you _should_ see a load of curl lines whizzing past, and when it's finished, some data should have been imported. You can test it with something like:
 
