@@ -16,6 +16,7 @@ gem 'rack-conneg'
 gem 'iso8601'
 gem 'xml-simple'
 gem 'rack-google-analytics'
+gem 'badgerbadgerbadger'
 
 group :development, :test do
   gem 'travis', '~> 1.6'
