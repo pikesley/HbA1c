@@ -1,9 +1,9 @@
-[![Build Status](http://img.shields.io/travis/pikesley/HbA1c.png)](https://travis-ci.org/pikesley/HbA1c)
-[![Dependency Status](http://img.shields.io/gemnasium/pikesley/HbA1c.png)](https://gemnasium.com/pikesley/HbA1c)
-[![Coverage Status](http://img.shields.io/coveralls/pikesley/HbA1c.png)](https://coveralls.io/r/pikesley/HbA1c)
-[![Code Climate](http://img.shields.io/codeclimate/github/pikesley/HbA1c.png)](https://codeclimate.com/github/pikesley/HbA1c)
-[![License](http://img.shields.io/:license-mit-blue.png)](http://pikesley.mit-license.org)
-[![Badges](http://img.shields.io/:badges-6/6-ff6799.png)](https://github.com/pikesley/badger)
+[![Build Status](http://img.shields.io/travis/pikesley/HbA1c.svg)](https://travis-ci.org/pikesley/HbA1c)
+[![Dependency Status](http://img.shields.io/gemnasium/pikesley/HbA1c.svg)](https://gemnasium.com/pikesley/HbA1c)
+[![Coverage Status](http://img.shields.io/coveralls/pikesley/HbA1c.svg)](https://coveralls.io/r/pikesley/HbA1c)
+[![Code Climate](http://img.shields.io/codeclimate/github/pikesley/HbA1c.svg)](https://codeclimate.com/github/pikesley/HbA1c)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://pikesley.mit-license.org)
+[![Badges](http://img.shields.io/:badges-6/6-ff6799.svg)](https://github.com/pikesley/badger)
 
 # HbA1c
 
