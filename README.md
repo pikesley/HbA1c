@@ -82,7 +82,7 @@ You need Ruby 2.1.0 installed. Now:
 
 You'll need a working Heroku configuration, which [is pretty damned easy](https://devcenter.heroku.com/articles/quickstart) these days.
 
-Now create a Heroku app (called something other than _pancreas_api_, I already claimed that):
+Now create a Heroku app (called something other than _pancreas-api_, I already claimed that):
 
     ➔ heroku apps:create pancreas-api --region eu
     Creating pancreas-api... done, region is eu
@@ -100,7 +100,7 @@ Now there's some manual fiddling to set up a DB user, so do
 
     heroku addons:open mongolab
     
-There should see your new database; create a user and password on it. Then bring those creds back to your shell:
+There you should see your new database; create a user and password on it. Then bring those creds back to your shell:
 
     ➔ MONGOLAB_USER=hba1c
     ➔ MONGOLAB_PASS=i_r_secure_password
