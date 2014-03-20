@@ -89,7 +89,7 @@ Now create a Heroku app (called something other than _pancreas-api_, I already c
     http://pancreas-api.herokuapp.com/ | git@heroku.com:pancreas-api.git
     Git remote heroku added
 
-Heroku have at least 2 MongoDB add-on services. MongoHQ is _really_ slick, but it's not currently available in the EU region, so let's use Mongolab instead:
+Heroku have at least 2 MongoDB add-on services. MongoHQ is _really_ slick, but it's not currently available in the EU region, so let's use Mongolab instead (UPDATE: this seems to be no longer true):
 
     ➔ heroku addons:add mongolab
     Adding mongolab on pancreas-api... done, v3 (free)
