@@ -17,6 +17,7 @@ gem 'iso8601'
 gem 'xml-simple'
 gem 'rack-google-analytics'
 gem 'badgerbadgerbadger'
+gem 'actionpack', '~> 3'
 
 group :development, :test do
   gem 'travis', '~> 1.6'
